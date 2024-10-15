@@ -1,0 +1,128 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+        font-family: "Bona Nova SC", serif;
+        font-weight: 400;
+        font-style: normal;
+     
+        font-family: "Bona Nova SC", serif;
+        font-weight: 700;
+        font-style: normal;
+    
+        font-family: "Bona Nova SC", serif;
+        font-weight: 400;
+        font-style: italic;
+     
+}
+
+a{text-decoration: none;
+color: #faf8f8;}
+
+.degrade{background: linear-gradient(to right, #024b18, 	#000000 );}
+
+html{
+    height: 100vh;
+    font-size: 14px;
+
+}
+
+body{
+    background: linear-gradient(140deg, #182c3f, 	#068a06);
+    height: 100%;
+}
+
+.container{
+    height: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    color: rgb(241, 241, 240);
+}
+
+header{
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+
+header h1{
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.img{
+    width: 200px;
+    border-radius: 50%;
+}
+
+a.link i{font-size: 1.2em;}
+
+a.link button:hover, footer a.btn-rodape:hover{transform: scale(1.1);}
+
+footer{
+    text-align: center;
+    margin: 25px;}
+
+   a.link button {
+    width: 100%;
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 30px;
+    font-size: 2em;
+    cursor: pointer;
+    color: rgb(255, 254, 254);
+    background: linear-gradient(to right, #024b18, #000000);
+    animation: pulsar 1.3s infinite alternate;
+    transition: transform 0.2s, background 0.4s, color 0.4s, box-shadow 0.4s; /* Adiciona transição para sombra */
+}
+
+@keyframes pulsar {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+a.link button:hover {
+    transform: scale(1.1);
+    color: #ffffff; /* Mantém a cor do texto */
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.5)); /* Gradiente mais sutil */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); /* Adiciona sombra ao passar o mouse */
+}
+
+
+
+section.botoes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+
+
+footer a.btn-rodape{
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    font-size: 2em;
+    line-height: 60px;
+    border-radius: 50%;
+    margin: 0 10px;
+    transition: .2s;
+
+}
+
+p{
+    font-size: 2em;
+}
