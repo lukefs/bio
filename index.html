@@ -1,41 +1,111 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>link bio</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    
+    <title>Cara ou Coroa</title>
+    <script>
+        let token;
+
+        async function login() {
+            const userId = document.getElementById('userId').value;
+
+            try {
+                const response = await fetch('http://144.217.195.48:3197/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: parseInt(userId) })
+                });
+
+                if (!response.ok) {
+                    throw new Error(Erro HTTP! Status: ${response.status});
+                }
+
+                const data = await response.json();
+
+                if (data.token) {
+                    token = data.token;
+                    document.getElementById('status').innerText = 'Login bem-sucedido!';
+                    fetchBalance();
+                } else {
+                    document.getElementById('status').innerText = Erro: ${data.error};
+                }
+            } catch (error) {
+                console.error('Erro ao fazer login:', error);
+                document.getElementById('status').innerText = "Erro de comunicação com a API.";
+            }
+        }
+
+        async function fetchBalance() {
+            try {
+                const response = await fetch('http://144.217.195.48:3197/api/balance', {
+                    method: 'GET',
+                    headers: { 'Authorization': Bearer ${token} }
+                });
+
+                if (!response.ok) {
+                    throw new Error(Erro HTTP! Status: ${response.status});
+                }
+
+                const data = await response.json();
+
+                if (data.balance) {
+                    document.getElementById('balance').innerText = Saldo: ${data.balance} moedas;
+                } else {
+                    document.getElementById('balance').innerText = Erro: ${data.error};
+                }
+            } catch (error) {
+                console.error('Erro ao buscar saldo:', error);
+                document.getElementById('balance').innerText = "Erro de comunicação com a API.";
+            }
+        }
+
+        async function placeBet(choice) {
+            const betAmount = parseInt(document.getElementById('betAmount').value);
+
+            try {
+                const response = await fetch('http://144.217.195.48:3197/api/bet', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': Bearer ${token} 
+                    },
+                    body: JSON.stringify({ bet_amount: betAmount, choice })
+                });
+
+                if (!response.ok) {
+                    throw new Error(Erro HTTP! Status: ${response.status});
+                }
+
+                const data = await response.json();
+
+                document.getElementById('result').innerText = Resultado: ${data.result}, ${data.message};
+                fetchBalance();
+            } catch (error) {
+                console.error('Erro ao fazer aposta:', error);
+                document.getElementById('result').innerText = "Erro de comunicação com a API.";
+            }
+        }
+    </script>
 </head>
 <body>
-    <div class="container">
+    <h1>Cara ou Coroa</h1>
 
-        <header>
-            <img src="img/kaio.jpg" alt="kaio mentor" class="img">
-            <h1>Kaio Scholomer</h1>
-            <p> Aprenda a ver o mundo através da lente.</p>
-        </header>
+    <label for="userId">ID do Usuário:</label>
+    <input type="text" id="userId">
+    <button onclick="login()">Login</button>
 
+    <p id="status"></p>
 
-        <section class="botoes">
-            <a href="https://wa.me/553798223986?text=Vim%20pela%20bio%2C%20quero%20saber%20mais%20sobre%20a%20mentoria" target="_blank" class="link">
-                <button class="degrade">
-                    <span>Começar mentoria</span>
-                </button>
-            </a>
+    <h2>Saldo</h2>
+    <p id="balance"></p>
 
-        </section>
+    <h2>Fazer Aposta</h2>
+    <label for="betAmount">Valor da Aposta:</label>
+    <input type="number" id="betAmount">
+    <button onclick="placeBet('cara')">Cara</button>
+    <button onclick="placeBet('coroa')">Coroa</button>
 
-        <footer>
-            <a href="https://wa.me/553798223986?text=Vim%20pela%20bio%2C%20quero%20saber%20mais%20sobre%20a%20mentoria" class="btn-rodape degrade" target="_blank"><i class="bi bi-whatsapp"></i></a>
-            <a href="https://www.instagram.com/kaioscholomer?igsh=dXhsYmZxY2JpMTRz" class="btn-rodape degrade" target="_blank"><i class="bi bi-instagram"></i></a>
-        </footer>
-
-
-    </div>
+    <p id="result"></p>
 </body>
 </html>
