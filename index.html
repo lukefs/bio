@@ -39,9 +39,11 @@
         async function fetchBalance() {
             try {
                 const response = await fetch('http://144.217.195.48:3197/api/balance', {
-                    method: 'GET',
-                    headers: { 'Authorization': Bearer ${token} }
-                });
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
 
                 if (!response.ok) {
                     throw new Error(Erro HTTP! Status: ${response.status});
